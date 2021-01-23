@@ -42,7 +42,7 @@ typedef struct day
 {
     // Atributos de la estructura day
     int dia;
-    struct activity *listaDias;
+    struct nodo *listaDias;
 
 } day;
 
@@ -50,7 +50,7 @@ typedef struct month
 {
     // Atributos de la estructura month
     int mes;
-    struct month *listaDias;
+    struct day listaDias[31];
 
 } month;
 
@@ -58,7 +58,7 @@ typedef struct year
 {
     // Atributos de la estructura year
     int anio;
-    struct month *listaMeses;
+    struct month listaMeses [12];
 
 } year;
 
@@ -67,18 +67,20 @@ typedef struct nodo
 {
     // Atributos del nodo
     int id;
-    struct nodo *next;
-    struct nodo *before;
+    struct nodo *siguiente;
+    struct nodo *anterior;
 
-    // Para cada nodo tendran los 4 tipos de estructuras (year, month, day, activity)
-    struct year thisYear;
-    struct month thisMonth;
-    struct day thisDay;
+
     struct activity thisActivity;
+    struct year thisYear;
 
 } nodo;
+
+
 // assets
 #include "assets\tools.c"
+#include "assets\ListCircular.c"
+#include "assets\Listyear.c"
 #include "assets\menu.c"
 
 
