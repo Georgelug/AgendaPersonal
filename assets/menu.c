@@ -39,9 +39,8 @@ void menu()
         case 1:
             // Ver mi dia
             system("cls");
-            p("\n\n\tFecha de hoy: %d / %d / %d ", anioNuevo.listaMeses[fechaDeHoy.mes - 1].listaDias[fechaDeHoy.dia - 1].dia, anioNuevo.listaMeses[fechaDeHoy.mes - 1].mes, anioNuevo.anio);
 
-            MostrarTodoElCalendario(anioNuevo);
+            menuMiDia(anioNuevo , fechaDeHoy , tempo);
 
             break;
         case 2:
@@ -62,6 +61,8 @@ void menu()
             respuesta = 2;
             break;
         }
+        
+        system("cls");
         if(respuesta != 2)
             respuesta = answer("Menu principal"); //se vuelve a preguntar por si se requiere continuar en el menu princiapl o salir del programa
     }

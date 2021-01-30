@@ -138,3 +138,20 @@ enum boolean del(nodo **head, nodo **elegido)
         return false;
     }
 }
+
+int CountNodes(nodo **head){
+
+    int cont = 0;
+    nodo *actual = *head;
+    if(*head == NULL)
+        return 0;
+
+    do{
+
+        cont++;
+        actual = actual -> anterior;
+
+    }while(actual != *head);
+
+    return cont;
+}

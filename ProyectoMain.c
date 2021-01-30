@@ -44,7 +44,7 @@ typedef struct day
 {
     // Atributos de la estructura day
     int dia;
-    struct nodo *listaDias;
+    struct nodo *listaActividades ;
 
 } day;
 
@@ -82,6 +82,7 @@ typedef struct nodo
 // assets
 #include "assets\tools.c"
 #include "assets\ListCircular.c"
+#include "assets\MiDia.c"
 #include "assets\Listyear.c"
 #include "assets\menu.c"
 
