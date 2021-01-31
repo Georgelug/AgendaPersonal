@@ -46,7 +46,7 @@ void menu()
         case 2:
             // Buscar evento
             system("cls");
-            p("\n\n\tBuscar evento");
+            menuBuscarEvento(&anioNuevo);
 
             break;
         case 3:
@@ -61,7 +61,7 @@ void menu()
             respuesta = 2;
             break;
         }
-        
+
         system("cls");
         if(respuesta != 2)
             respuesta = answer("Menu principal"); //se vuelve a preguntar por si se requiere continuar en el menu princiapl o salir del programa

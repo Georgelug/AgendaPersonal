@@ -13,6 +13,31 @@ struct Hora PedirLaHora(char *frase){
     return nuevaHora;
 }
 
+// Funcion que muestra la hora, recibiendo como parametro una estructura de tipo hora
+void MostrarHora(Hora thisHora)
+{
+    p("\n\tHora: %d : %d", thisHora.Horas, thisHora.minutos);
+}
+
+// Funcion que muestra la fecha, recibiendo como parametro una estructura de tipo Fecha
+void MostrarFecha(Fecha thisFecha)
+{
+    p("\n\tFecha: %d / %d / %d", thisFecha.dia, thisFecha.mes, thisFecha.anio);
+}
+
+// Aqui hay problemas
+// Funcion que muestra una actividad, recibiendo como parametro una estructura de tipo activity
+void MostrarActividad(struct activity Evento)
+{
+
+    p("\n\n\tNo. Actividad: %d \t Nombre de la actividad:  ", Evento.NumActividad);
+    puts(Evento.NombreActividad);
+    p("\n\n\tLugar:");
+    puts(Evento.lugar);
+    MostrarFecha(Evento.thisFecha);
+    MostrarHora(Evento.thisHora);
+    p("\n\n\n\tDescripcion:\n\n\t%s\n\t", Evento.descripcion);
+}
 // Funcion que agrega actividades
 enum boolean AgregarActividad(struct nodo **listActividad, struct Fecha fechaDeHoy){
 
@@ -71,31 +96,6 @@ enum boolean AgregarActividad(struct nodo **listActividad, struct Fecha fechaDeH
     return verificar;
 }
 
-// Funcion que muestra la hora, recibiendo como parametro una estructura de tipo hora
-void MostrarHora(Hora thisHora){
-    p("\n\tHora: %d : %d", thisHora.Horas, thisHora.minutos);
-}
-
-// Funcion que muestra la fecha, recibiendo como parametro una estructura de tipo Fecha
-void MostrarFecha(Fecha thisFecha)
-{
-    p("\n\tFecha: %d / %d / %d", thisFecha.dia , thisFecha.mes, thisFecha.anio);
-}
-
-// Aqui hay problemas
-// Funcion que muestra una actividad, recibiendo como parametro una estructura de tipo activity
-void MostrarActividad(struct activity Evento){
-
-    p("\n\n\tNo. Actividad: %d \t Nombre de la actividad:  ", Evento.NumActividad);
-    puts(Evento.NombreActividad);
-    p("\n\n\tLugar:");
-    puts(Evento.lugar);
-    MostrarFecha(Evento.thisFecha);
-    MostrarHora(Evento.thisHora);
-    p("\n\n\n\tDescripcion:\n\n\t%s\n\t", Evento.descripcion);
-
-}
-
 // Funcion que permite recorrer la lista de actividades e imprimir cada una
 enum boolean VerActividades(struct nodo *listActividad)
 {
@@ -113,7 +113,7 @@ enum boolean VerActividades(struct nodo *listActividad)
 
         system("cls");
 
-        MostrarActividad(actual->thisActivity);
+        MostrarActividad((actual->thisActivity));
         respuesta = validar(1, 3, "Elige una opcion\n\n\t(1) Actividad anterior\t\t(2) Salir\t\t(3) Actividad siguiente\n\n\t\t\t: ");
         
         while (respuesta == 1 || respuesta == 3)
@@ -303,3 +303,96 @@ void menuMiDia(struct year anioNuevo, struct Fecha fechaDeHoy, SYSTEMTIME tempo)
     }
 }
 
+void menuDiaBuscado(struct day *thisDay , struct Fecha thisFecha){
+
+    int respuesta, opcion, numActividades = 0;
+
+    respuesta = answer("seccion mostrar dia"); // se pregunta si se desea ingresar al menu principal o salir
+    while (respuesta == 1)
+    {
+
+        numActividades = CountNodes(&(thisDay->listaActividades));
+        system("cls"); // se limpia pantalla
+        
+        MostrarFecha(thisFecha);
+
+        p("\n\n\tNumero de actividades: %d", numActividades);
+
+        if (numActividades == 0)
+        {
+            opcion = validar(1, 2, "\n\n\tselecciona la opcion que deseas realizar\n\n\t\t1)Agregar actividad\n\n\t\t2)Salir\n\n\t\t:");
+            switch (opcion)
+            {
+            case 1:
+
+                // Aqui va la funcion agregar actividad
+                system("cls");
+                p("\n\n\t%s\n\n\t", ((AgregarActividad(&(thisDay->listaActividades), thisFecha) ? "Se agrego la actividad o evento" : "Se cancelo el procesos"))); // se aplica el operador ternario , en caso de que la funcion devuelva true, entonces imprimira lo que esta a la izquierda ':' de otro modo pues lo del lado derecho
+                break;
+
+            case 2:
+
+                //Salir
+                system("cls");
+                p("\n\n\tSaliendo ...");
+
+                if (respuesta != 2)
+                    respuesta = answer("seccion mostrar dia");
+
+                break;
+            }
+        }
+        else
+        {
+
+            opcion = validar(1, 6, "\n\n\tselecciona la opcion que deseas realizar\n\n\t\t1)Ver Actividades\n\n\t\t2)Agregar actividad\n\n\t\t3)Eliminar una actividad\n\n\t\t4)Buscar una actividad\n\n\t\t5)Salir\n\n\t\t:");
+            switch (opcion)
+            {
+            case 1:
+
+                // Aqui va la funcion ver actividadades // ISSUE HERE
+                system("cls");
+                p("\n\n\t%s\n\n\t", ((VerActividades((thisDay->listaActividades))) ? "Mostrando actividades" : "No hay actividades que mostrar"));
+                system("cls");
+
+                break;
+            case 2:
+
+                // Aqui va la funcion agregar actividad
+                system("cls");
+                p("\n\n\t%s\n\n\t", ((AgregarActividad(&(thisDay->listaActividades), thisFecha)) ? "Se agrego la actividad o evento" : "Se cancelo el procesos"));
+                system("cls");
+
+                break;
+
+            case 3:
+
+                // Aqui va la funcion eliminar actividad
+                system("cls");
+                EliminarActividad(&(thisDay->listaActividades));
+                system("cls");
+
+                break;
+            case 4:
+
+                // Aqui va la funcion buscar actividad
+                system("cls");
+                MostrarActividad(BuscarActividad(&(thisDay->listaActividades)));
+                break;
+            case 5:
+
+                //Salir
+                p("\n\n\tSaliendo");
+                if(respuesta == 1){
+                    respuesta = 2;
+                }
+                
+                break;
+            }
+        }
+
+        // opcion = validar(1,);
+
+        respuesta = answer("seccion mostrar dia"); // se pregunta si se desea ingresar al menu principal o salir
+    }
+}
