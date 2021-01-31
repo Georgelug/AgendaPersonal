@@ -36,6 +36,6 @@ void menuBuscarEvento(struct year *anio){
 
         menuDiaBuscado(&thisDia , thisFecha);
         anio->listaMeses[thisFecha.mes-1].listaDias[thisFecha.dia-1] = thisDia;
-        respuesta = validar(1, 2, "Elige una opcion\n\n\t(1) Realizar una busqueda\t\t(2)Cancelar busqueda\n\n\t: ");
+        respuesta = validar(1, 2, "Elige una opcion\n\n\t(1) Realizar otra busqueda\t\t(2)Cancelar busqueda\n\n\t: ");
     }
 }

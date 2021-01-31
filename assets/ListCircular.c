@@ -4,7 +4,7 @@ doblemente ligada.
 */
 // Esta funcion sirve para buscar nodos a una lista ciruclar doblemente ligada
 //recibe como parametros a la cabeza de la lista y el ide con el que se va a buscar el nodo, la funcion devuelve al nodo encontrado
-nodo *search(nodo **head, int *ide)
+nodo *search(nodo **head, int *ide)//k
 {
     if (*head == NULL) //en caso de que la lista este vacia, entonces se retorna nulo
     {
@@ -41,7 +41,7 @@ nodo *search(nodo **head, int *ide)
 }
 
 // Funciones que obtinen el id mas alto y el mas bajo de la lista
-int IdNodoMenor(nodo **head)
+int IdNodoMenor(nodo **head)//k
 {
     int idmin;
     nodo *actual = *head;
@@ -51,7 +51,7 @@ int IdNodoMenor(nodo **head)
     }
     else
     {
-        if ((*head)->siguiente == *head && (*head)->anterior == *head)
+        if ((*head)->siguiente == *head && (*head)->anterior == *head)//Un solo nodo en la lista
         {
             return (*head)->id;
         }
@@ -73,7 +73,7 @@ int IdNodoMenor(nodo **head)
     }
 }
 
-int IdNodoMayor(nodo **head)
+int IdNodoMayor(nodo **head)//k
 {
     int idmax;
     nodo *actual = *head;
@@ -109,7 +109,7 @@ int IdNodoMayor(nodo **head)
 
 // Esta funcion sirve para agregar nodos a una lista ciruclar doblemente ligada
 // recibe como parametro a la cabeza de la lista, el nodo que se quiere agregar y el ide para validar si no existe en la lista aun , para ahcer que todos los ide's sean unicos e irrepetibles, para facilitar la busqueda
-enum boolean add(nodo **head, nodo **nuevo, int *ide)
+enum boolean add(nodo **head, nodo **nuevo, int *ide)//n
 {
     if (*head == NULL) //1er caso si la lista esta vacia entonces solo se asigna la cabeza de la lista al nuevo nodo y hacemos que tanto anterior como  siguiente apunten a head por ende al nuevo nodo (un auto apuntamiento por atras y por adelante)
     {
@@ -219,7 +219,7 @@ enum boolean add(nodo **head, nodo **nuevo, int *ide)
 // Recibe como parametros la cabeza de la lista y el nodo que se quiere eliminar
 // dependiendo del caso se compara el nodo y si resulta que coincide con el nodo elegido para eliminar, entonces se procede a eliminar 
 // moviendo todos los pauntadores de siguiente y anterior para que finalmente el nodo a eliminar quede aislado y despues se force a que apunte a nullo
-enum boolean del(nodo **head, nodo **elegido)
+enum boolean del(nodo **head, nodo **elegido)//n
 {
     if (*head != NULL && *elegido != NULL)//se verifica si la lista no esta vacia y elegido tambien
     {
@@ -283,11 +283,11 @@ enum boolean del(nodo **head, nodo **elegido)
 // Esta funcion sirve para contar todos los nodos de una lista circuclar doblemente ligada
 // Recibe como parametros el apuntador de la primera localidad de la lista y devulve un contador el cual se incrementa en funcion
 // del recorrido de la lista con ayuda del apuntador actual, el cual se va desplazar hacia el nodo anterior hasta el nodo actual sea otra vez la cabeza de la lista
-int CountNodes(nodo **head){
+int CountNodes(nodo **head){//n
 
     int cont = 0;
     nodo *actual = *head;
-    if(*head == NULL)
+    if(*head == NULL)//k
         return 0;
 
     do{

@@ -42,7 +42,7 @@ void ListarMeses(struct month *ListaMeses){
 // La funcion retorna a la estructura de tipo year
 struct year CrearYear(int anio)
 {
-    int i;
+    
     struct year nuevoYear;
 
     nuevoYear.anio = anio;

@@ -79,7 +79,7 @@ typedef struct nodo
 } nodo;
 
 
-// assets
+// assets, todos scripts incluidos , que requiere el programa para su funcionamiento
 #include "assets\tools.c"
 #include "assets\ListCircular.c"
 #include "assets\MiDia.c"

@@ -40,7 +40,7 @@ void menu()
             // Ver mi dia
             system("cls");
 
-            menuMiDia(anioNuevo , fechaDeHoy , tempo);
+            menuMiDia(&anioNuevo , fechaDeHoy , tempo);
 
             break;
         case 2:

@@ -62,7 +62,7 @@ enum boolean AgregarActividad(struct nodo **listActividad, struct Fecha fechaDeH
         // Se pide al usuario la info que requiere un evento o actvidad
         system("cls");
 
-        fflush(stdin);
+        fflush(stdin); // Esta funcion lo que hace es limpiar el buffer
         p("\n\n\tIngresa el titulo del evento o actividad: ");
         gets(NombreActividad);
 
@@ -93,17 +93,17 @@ enum boolean AgregarActividad(struct nodo **listActividad, struct Fecha fechaDeH
     enum boolean verificar = add(listActividad, &NuevoNodoDeActividad, &ide);
 
     system("cls");
-    p("\n\n\tActivida ingresada: ");
+    p("\n\n\tActividad ingresada: ");
     MostrarActividad((*listActividad)->thisActivity);
 
     return verificar;
 }
 
 // Funcion que permite recorrer la lista de actividades e imprimir cada una
-enum boolean VerActividades(struct nodo *listActividad)
+enum boolean VerActividades(struct nodo **listActividad)
 {
 
-    struct nodo *actual = listActividad;
+    struct nodo *actual = *listActividad;
     int respuesta;
     struct activity Evento;
 
@@ -232,20 +232,20 @@ void EliminarActividad(struct nodo **listaActividad){
 }
 
 // Funcion del menu de la seccion mmi Dia
-void menuMiDia(struct year anioNuevo, struct Fecha fechaDeHoy, SYSTEMTIME tempo)
+void menuMiDia(struct year *anioNuevo, struct Fecha fechaDeHoy, SYSTEMTIME tempo)
 {
 
     int respuesta, opcion, numActividades = 0;
 
     struct day thisDay ;
-    thisDay = anioNuevo.listaMeses[fechaDeHoy.mes - 1].listaDias[fechaDeHoy.dia - 1];
+    thisDay = anioNuevo->listaMeses[fechaDeHoy.mes - 1].listaDias[fechaDeHoy.dia - 1];
 
     respuesta = answer("seccion mostrar mi dia"); // se pregunta si se desea ingresar al menu principal o salir
     while (respuesta == 1){
 
         numActividades = CountNodes(&(thisDay.listaActividades));
         system("cls"); // se limpia pantalla
-        p("\n\n\tFecha de hoy: %d / %d / %d ", anioNuevo.listaMeses[fechaDeHoy.mes - 1].listaDias[fechaDeHoy.dia - 1].dia, anioNuevo.listaMeses[fechaDeHoy.mes - 1].mes, anioNuevo.anio);
+        p("\n\n\tFecha de hoy: %d / %d / %d ", anioNuevo->listaMeses[fechaDeHoy.mes - 1].listaDias[fechaDeHoy.dia - 1].dia, anioNuevo->listaMeses[fechaDeHoy.mes - 1].mes, anioNuevo->anio);
         p("\n\n\tNumero de actividades: %d",numActividades);
 
         if (numActividades == 0){
@@ -278,7 +278,7 @@ void menuMiDia(struct year anioNuevo, struct Fecha fechaDeHoy, SYSTEMTIME tempo)
 
                 // Aqui va la funcion ver actividadades // ISSUE HERE
                 system("cls");
-                p("\n\n\t%s\n\n\t", ((VerActividades((thisDay.listaActividades))) ? "Mostrando actividades" : "No hay actividades que mostrar"));
+                p("\n\n\t%s\n\n\t", ((VerActividades(&(thisDay.listaActividades))) ? "Mostrando actividades" : "No hay actividades que mostrar"));
                 system("cls");
                 
                 break;
@@ -314,9 +314,8 @@ void menuMiDia(struct year anioNuevo, struct Fecha fechaDeHoy, SYSTEMTIME tempo)
                 break;
             }
         }
-        
-        // opcion = validar(1,);
-        
+
+        anioNuevo->listaMeses[fechaDeHoy.mes - 1].listaDias[fechaDeHoy.dia - 1] = thisDay;
         respuesta = answer("seccion mostrar mi dia"); // se pregunta si se desea ingresar al menu principal o salir
     }
 }
@@ -370,7 +369,7 @@ void menuDiaBuscado(struct day *thisDay , struct Fecha thisFecha){
 
                 // Aqui va la funcion ver actividadades // ISSUE HERE
                 system("cls");
-                p("\n\n\t%s\n\n\t", ((VerActividades((thisDay->listaActividades))) ? "Mostrando actividades" : "No hay actividades que mostrar"));
+                p("\n\n\t%s\n\n\t", ((VerActividades(&(thisDay->listaActividades))) ? "Mostrando actividades" : "No hay actividades que mostrar"));
                 system("cls");
 
                 break;
@@ -408,8 +407,6 @@ void menuDiaBuscado(struct day *thisDay , struct Fecha thisFecha){
                 break;
             }
         }
-
-        // opcion = validar(1,);
 
         respuesta = answer("seccion mostrar dia"); // se pregunta si se desea ingresar al menu principal o salir
     }

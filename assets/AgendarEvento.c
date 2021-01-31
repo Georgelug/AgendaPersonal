@@ -23,6 +23,6 @@ void menuAgendarEvento(struct year *anio)
 
         anio->listaMeses[thisFecha.mes - 1].listaDias[thisFecha.dia - 1] = thisDia;
 
-        respuesta = validar(1, 2, "Elige una opcion\n\n\t(1) Agregar un evento \t\t(2)salir\n\n\t: ");
+        respuesta = validar(1, 2, "Elige una opcion\n\n\t(1) Agregar otro evento \t\t(2)salir\n\n\t: ");
     }
 }
