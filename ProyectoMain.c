@@ -84,6 +84,7 @@ typedef struct nodo
 #include "assets\ListCircular.c"
 #include "assets\MiDia.c"
 #include "assets\BuscarEvento.c"
+#include "assets\AgendarEvento.c"
 #include "assets\Listyear.c"
 #include "assets\menu.c"
 

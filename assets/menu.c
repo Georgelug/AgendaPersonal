@@ -52,7 +52,7 @@ void menu()
         case 3:
             // Agendar evento
             system("cls");
-            p("\n\n\tAgendar evento");
+            menuAgendarEvento(&anioNuevo);
             break;
         case 4:
             // Salir

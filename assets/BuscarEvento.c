@@ -6,7 +6,7 @@ struct Fecha PedirLaFecha(char *frase,int anio){
     p("\n\n\t%s", frase);
 
     nuevaFecha.mes = validar(1, 12, "Ingresa el mes (de 1 a 12): ");
-    nuevaFecha.dia = validar(1, 31, "Ingresa los minutos (de 1 a 31): ");
+    nuevaFecha.dia = validar(1, 31, "Ingresa el dia (de 1 a 31): ");
     nuevaFecha.anio = anio;
 
     system("cls");
@@ -14,10 +14,12 @@ struct Fecha PedirLaFecha(char *frase,int anio){
     return nuevaFecha;
 }
 
+// Funcion que regresa el dia del anio dada una fecha
 struct day BuscarDia(struct Fecha thisFecha, struct year thisAnio){
     return thisAnio.listaMeses[thisFecha.mes -1].listaDias[thisFecha.dia - 1];
 }
 
+// Funcion que muestra el menu que permite buscar un avento a partir de una fecha en especifico y no el dia de hoy
 void menuBuscarEvento(struct year *anio){
 
     int respuesta, opcion;

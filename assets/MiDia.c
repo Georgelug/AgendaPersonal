@@ -79,6 +79,7 @@ enum boolean AgregarActividad(struct nodo **listActividad, struct Fecha fechaDeH
             return false;
     }
 
+    
     NuevaActividad.NombreActividad = NombreActividad;
     NuevaActividad.lugar = lugar;
     NuevaActividad.descripcion = descripcion;
@@ -91,6 +92,8 @@ enum boolean AgregarActividad(struct nodo **listActividad, struct Fecha fechaDeH
 
     enum boolean verificar = add(listActividad, &NuevoNodoDeActividad, &ide);
 
+    system("cls");
+    p("\n\n\tActivida ingresada: ");
     MostrarActividad((*listActividad)->thisActivity);
 
     return verificar;
@@ -102,6 +105,7 @@ enum boolean VerActividades(struct nodo *listActividad)
 
     struct nodo *actual = listActividad;
     int respuesta;
+    struct activity Evento;
 
     p("\n\n\tEn la funcion VerActividades");
 
@@ -112,8 +116,15 @@ enum boolean VerActividades(struct nodo *listActividad)
     else{
 
         system("cls");
-
-        MostrarActividad((actual->thisActivity));
+        Evento = actual->thisActivity;
+        p("\n\n\tNo. Actividad: %d \t Nombre de la actividad:  ", Evento.NumActividad);
+        puts(Evento.NombreActividad);
+        p("\n\n\tLugar:");
+        puts(Evento.lugar);
+        MostrarFecha(Evento.thisFecha);
+        MostrarHora(Evento.thisHora);
+        p("\n\n\n\tDescripcion:\n\n\t%s\n\t", Evento.descripcion);
+        // MostrarActividad(actualActividad);
         respuesta = validar(1, 3, "Elige una opcion\n\n\t(1) Actividad anterior\t\t(2) Salir\t\t(3) Actividad siguiente\n\n\t\t\t: ");
         
         while (respuesta == 1 || respuesta == 3)
@@ -129,8 +140,15 @@ enum boolean VerActividades(struct nodo *listActividad)
                 actual = actual->siguiente;
                 break;
             }
-
-            MostrarActividad(actual->thisActivity);
+            Evento = actual->thisActivity;
+            // MostrarActividad(actualActividad);
+            p("\n\n\tNo. Actividad: %d \t Nombre de la actividad:  ", Evento.NumActividad);
+            puts(Evento.NombreActividad);
+            p("\n\n\tLugar:");
+            puts(Evento.lugar);
+            MostrarFecha(Evento.thisFecha);
+            MostrarHora(Evento.thisHora);
+            p("\n\n\n\tDescripcion:\n\n\t%s\n\t", Evento.descripcion);
 
             respuesta = validar(1, 3, "Elige una opcion\n\n\t(1) Actividad anterior\t\t(2) Salir\t\t(3) Actividad siguiente\n\n\t\t\t: ");
         }

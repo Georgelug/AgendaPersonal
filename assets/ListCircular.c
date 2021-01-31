@@ -205,16 +205,6 @@ enum boolean add(nodo **head, nodo **nuevo, int *ide)
                 anterior->siguiente = (*nuevo);
                 actual->anterior = (*nuevo);
             }
-
-            /*
-            actual = actual->siguiente; // el
-            actual->anterior = *nuevo;
-            (*nuevo)->siguiente = actual;
-            actual = actual->anterior;
-            actual->anterior = *head;
-            (*head)->siguiente = actual;
-            */
-
             return true;
         }
         else
