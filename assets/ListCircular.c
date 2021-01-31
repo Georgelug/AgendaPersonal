@@ -2,6 +2,110 @@
 Script donde se alojan todas las funciones del la estructura de datos lista circular
 doblemente ligada.
 */
+// Esta funcion sirve para buscar nodos a una lista ciruclar doblemente ligada
+//recibe como parametros a la cabeza de la lista y el ide con el que se va a buscar el nodo, la funcion devuelve al nodo encontrado
+nodo *search(nodo **head, int *ide)
+{
+    if (*head == NULL) //en caso de que la lista este vacia, entonces se retorna nulo
+    {
+        return NULL;
+    }
+    else //en caso contrario, entonces la lista tiene al menos un nodo
+    {
+        nodo *actual = *head;         // se declara un apuntador asignandole lo que aopunta head
+        enum boolean validar = false; // se declara una variable de tipo booleanda para verificar y validar operaciones
+        // Se procede a recorrer la lista por medio de el nodo actual hacia el anterio nodo
+        do
+        {
+            if (actual->id == *ide) // en caso de que el ide sea igual entonce encontro por lo tanto validar notifica que se realizo una operacion y se quiebra el ciclo
+            {
+                validar = true;
+                break;
+            }
+            else // encaso contrario se sigue recorriendo hacia el nodo anterior
+            {
+                actual = actual->anterior;
+            }
+        } while (actual != *head); //se reciorre mienttras actual no sea de nuevo head
+
+        //como se ve validar solo se hace true cuando se encuntra el nodo, entonces se retorna el nodo , encaso contrario retorna nulo por que entonces no se encontro nada
+        if (validar == true)
+        {
+            return actual;
+        }
+        else
+        {
+            return NULL;
+        }
+    }
+}
+
+// Funciones que obtinen el id mas alto y el mas bajo de la lista
+int IdNodoMenor(nodo **head)
+{
+    int idmin;
+    nodo *actual = *head;
+    if (*head == NULL) //Lista vacia
+    {
+        return 0;
+    }
+    else
+    {
+        if ((*head)->siguiente == *head && (*head)->anterior == *head)
+        {
+            return (*head)->id;
+        }
+        else
+        {
+            do
+            {
+                idmin = actual->id;
+                if (idmin > actual->id)
+                {
+                    actual = actual->anterior;
+                }
+                else
+                {
+                    return idmin;
+                }
+            } while (actual != *head);
+        }
+    }
+}
+
+int IdNodoMayor(nodo **head)
+{
+    int idmax;
+    nodo *actual = *head;
+    if (*head == NULL) //Lista vacia
+    {
+        return 0;
+    }
+    else
+    {
+        if ((*head)->siguiente == *head && (*head)->anterior == *head)
+        {
+            return (*head)->id;
+        }
+        else
+        {
+            do
+            {
+                idmax = actual->id;
+                if (idmax < actual->id)
+                {
+                    actual = actual->siguiente;
+                }
+                else
+                {
+                    return idmax;
+                }
+            } while (actual != *head);
+        }
+    }
+}
+
+
 
 // Esta funcion sirve para agregar nodos a una lista ciruclar doblemente ligada
 // recibe como parametro a la cabeza de la lista, el nodo que se quiere agregar y el ide para validar si no existe en la lista aun , para ahcer que todos los ide's sean unicos e irrepetibles, para facilitar la busqueda
@@ -19,7 +123,17 @@ enum boolean add(nodo **head, nodo **nuevo, int *ide)
         nodo *actual = *head; //declaramos a un nodo que apunte a lo que apunta head
         enum boolean buscar = false; // declaramos una variable que nos ayude a notificar si el ide existe ya
         nodo *tmp = *head;           // declaramos otro nodo que apunte a lo que apunta head
-        
+
+        //se obtienen los id's mayor y menor de la lista y se obtienen sus respectivos nodos, por fines practicos
+        int idMin;
+        idMin = IdNodoMenor(head);
+        int idMax ;
+        idMax = IdNodoMayor(head);
+        nodo *nodoMayor ;
+        nodoMayor = search(head, &idMax);
+        nodo *NodoMenor;
+        NodoMenor = search(head, &idMin);
+
         //se procede a recorrer la lista en caso de que el ide existe ya entonces buscar es igual a null, mientras no sea tmp otra vez head
         do
         {
@@ -36,7 +150,8 @@ enum boolean add(nodo **head, nodo **nuevo, int *ide)
         // en caso de que el ide no este entonces se procede a agregar el nodo
         if (buscar == false)
         {
-            nodo *anterior , *siguiente;
+            nodo *anterior , *siguiente;//Se decalran los nodos anterior y siguiente para irlos asignando dinamicamente a los apuntadores siguiente y anterior de actual    
+
             if(*ide < actual->id)
             { //Primer caso:  cuando El ide de nuevo es menor de actual entonces se recorre hacia el anterior hasta que el ide sea menor
                 actual = actual -> anterior;
@@ -49,7 +164,7 @@ enum boolean add(nodo **head, nodo **nuevo, int *ide)
                     anterior = actual->anterior;
                     siguiente = actual->siguiente;
 
-                    if (actual == *head)
+                    if (actual == *head || anterior == nodoMayor)
                     {
                         break;    
                     }
@@ -68,8 +183,7 @@ enum boolean add(nodo **head, nodo **nuevo, int *ide)
                     anterior = actual->anterior;
                     siguiente = actual->siguiente;
 
-                    if (actual == *head)
-                    {
+                    if (actual == *head || siguiente == NodoMenor){
                         break;
                     }
                 }
@@ -110,43 +224,6 @@ enum boolean add(nodo **head, nodo **nuevo, int *ide)
     }
 }
 
-// Esta funcion sirve para buscar nodos a una lista ciruclar doblemente ligada
-//recibe como parametros a la cabeza de la lista y el ide con el que se va a buscar el nodo, la funcion devuelve al nodo encontrado
-nodo *search(nodo **head, int *ide)
-{
-    if (*head == NULL) //en caso de que la lista este vacia, entonces se retorna nulo
-    {
-        return NULL;
-    }
-    else//en caso contrario, entonces la lista tiene al menos un nodo
-    {
-        nodo *actual = *head; // se declara un apuntador asignandole lo que aopunta head
-        enum boolean validar = false; // se declara una variable de tipo booleanda para verificar y validar operaciones
-        // Se procede a recorrer la lista por medio de el nodo actual hacia el anterio nodo 
-        do
-        {
-            if (actual->id == *ide) // en caso de que el ide sea igual entonce encontro por lo tanto validar notifica que se realizo una operacion y se quiebra el ciclo
-            {
-                validar = true;
-                break;
-            }
-            else // encaso contrario se sigue recorriendo hacia el nodo anterior
-            {
-                actual = actual->anterior;
-            }
-        } while (actual != *head);//se reciorre mienttras actual no sea de nuevo head
-
-        //como se ve validar solo se hace true cuando se encuntra el nodo, entonces se retorna el nodo , encaso contrario retorna nulo por que entonces no se encontro nada
-        if (validar == true)
-        {
-            return actual;
-        }
-        else
-        {
-            return NULL;
-        }
-    }
-}
 
 // Esta funcion sirve para eliminar nodos a una lista circular doblemente ligada
 // Recibe como parametros la cabeza de la lista y el nodo que se quiere eliminar
@@ -233,58 +310,3 @@ int CountNodes(nodo **head){
     return cont;
 }
 
-int IdNodoMenor(nodo **head){
-    int idmin;
-    nodo *actual = *head;
-    if(*head == NULL)//Lista vacia
-    {
-        return 0;
-    }
-    else{
-        if ((*head)->siguinete == *head && (*head)->anterior == *head){
-            return (*head) -> id ;
-        }else{
-            do
-            {
-               idmin = actual->id;
-               if (idmin > actual->id){
-                   actual = actual->anterior;
-               }else{
-                   return idmin;
-               }
-            } while (actual != *head);
-            
-        }
-    }
-}
-
-int IdNodoMayor(nodo **head){
-    int idmax;
-    nodo *actual = *head;
-    if (*head == NULL) //Lista vacia
-    {
-        return 0;
-    }
-    else
-    {
-        if ((*head)->siguinete == *head && (*head)->anterior == *head)
-        {
-            return (*head)->id;
-        }
-        else
-        {
-            do
-            {
-                idmax = actual->id;
-                if (idmax < actual->id)
-                {
-                    actual = actual->siguiente;
-                }
-                else
-                {
-                    return idmin;
-                }
-            } while (actual != *head);
-        }
-    }
-}

@@ -179,27 +179,36 @@ void EliminarActividad(struct nodo **listaActividad){
     struct nodo *NodoAEliminar; 
     int respuesta, ide, opcion;
     if(*listaActividad != NULL){
+        system("cls");
         respuesta = validar(1, 2, "Elige una opcion\n\n\t(1) Eliminar una actividad\t\t(2)salir\n\n\t: ");
         while (respuesta == 1 || *listaActividad != NULL)
-        {   
+        {
+            system("cls");
             thisActivity = BuscarActividad(listaActividad);//Se busca la actividad que se desea eliminar
             ide = (thisActivity.thisHora.Horas * 100) + (thisActivity.thisHora.minutos); // Esto sirve para que el ide de la actividad tenga la hora pero "concatenada y casteada a entero", ejemplo: La hora es 03:11 entonces ide = 311
             NodoAEliminar = search(listaActividad, &ide); //Se busca de nuevo en la lista, pero esta vez se devuelve completamente el nodo
 
             if (del(listaActividad, &NodoAEliminar)){
+                system("cls");
                 p("\n\n\tSe elimino correctamente la actividad");
                 if(*listaActividad == NULL){
+                    system("cls");
                     p("\n\n\tLa lista de actividades se a vaciado completamente");
                     break;
                 }
             }    
-            else
+            else{
+                system("cls");
                 p("\n\n\t no se pudo eliminar  la actividad");
-
+            }
+            system("cls");
             respuesta = validar(1, 2, "Elige una opcion\n\n\t(1) Eliminar otra actividad\t\t(2)salir\n\n\t: ");
+            if(respuesta == 2)
+                break;
         }
     }
     else{
+        system("cls");
         p("\n\n\tLista vacia");
     }
 }
